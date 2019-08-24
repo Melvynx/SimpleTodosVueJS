@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>toDos</title>
+    <meta charset="utf-8">
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="ToDos" class="toDosBlock">
+      <div class="toDosNew">
+        <label> {{ label }} <input type="text" v-model="doName" class="toDosNewInput" v-on:keyup.enter="sendToDos" placeholder="Nouvelle tâche"></label>
+      </div>
+      <p v-for="doList in toDosLists"> {{ doList.do }} </p>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="newToDos.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

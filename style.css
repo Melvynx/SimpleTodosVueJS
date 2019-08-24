@@ -1,0 +1,31 @@
+body{
+  background-color: #f7e6ff;
+}
+.toDosBlock{
+  width: 400px;
+  margin: auto;
+  background-color: #ffff99;
+  border-radius: 5px;
+}
+input:placeholder-shown{
+  color: #ffb3ff;  
+}
+.toDosNew{
+  height: 50px;
+}
+.toDosNewInput{
+  color: #b3b36b;
+  background-color: inherit;
+  border: none;
+  display: block;
+  width: 99%;
+  margin: 0;
+  margin-top: 50%;
+  height: 30px;
+  font-size: 18px;
+  transition-property: border;
+  transition-duration: 1s;
+}
+.toDosNewInput:focus{
+  border: 2px solid red;
+}
