@@ -7,13 +7,15 @@
   </head>
   <body>
     <div id="ToDos" class="toDosBlock">
-      <div class="toDosNew">
-        <label> {{ label }} <input type="text" v-model="doName" class="toDosNewInput" v-on:keyup.enter="sendToDos" placeholder="Nouvelle tâche"></label>
-      </div>
-      <p v-for="doList in toDosLists"> {{ doList.do }} </p>
+      <newtodo></newtodo>
+      <note v-for="doTo in toDosLists" v-bind:doto="doTo" />
     </div>
+
+
+
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="newToDos.js"></script>
+    <script src="doList.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

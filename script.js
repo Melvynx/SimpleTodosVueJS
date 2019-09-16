@@ -13,7 +13,7 @@ const toDos = new Vue({
   el: "#ToDos",
   data: {
     label: "",
-    toDosLists: [],
+    toDosLists: [{id: 0, do: "Faire les course", done: false}, {id: 1, do: "MANGER POIRE", done: false}, {id: 2, do: "chercher grand mère", done: false}],
     doName: "",
   },
   methods: {

@@ -1,18 +1,25 @@
-Vue.component('newToDos', {
+Vue.component('newtodo', {
+  props: ['doto'],
   data() {  
     return {
-      label: 'oui je suis un label a moi tout suel',
+      label: 'Ecrire une nouveau toDos.',
+      doName: '',
     };
   },
   methods: {
     sendToDos() {
-      alert("salut");
+      if (toDos.toDosLists) {
+        toDoSend = new newToDos(this.doName);
+        toDos.toDosLists.push(toDoSend);
+        this.doName = '';
+        console.log("send");
+      };
+      console.log("ok");
     },
   },
   template: `
     <div class="toDosNew">
-      <label> {{ label }} <input type="text" class="toDosNewInput" v-on:keyup.enter="sendToDos" placeholder="Nouvelle tâche"></label>
+      <label> {{ label }} <input type="text" v-model="doName" class="toDosNewInput" v-on:keyup.enter="sendToDos" placeholder="Nouvelle tâche"></label>
     </div>
   `,
 });
-console.log('ok')
