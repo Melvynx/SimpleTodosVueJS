@@ -1,4 +1,4 @@
-Vue.component('note', {
+Vue.component('doto', {
     props: ['doto'],
     data() {
       return {
@@ -33,7 +33,26 @@ Vue.component('note', {
             console.log("ok");
         },
         AnswerDeleteNote() {
+            console.log(this.answerDeleteToDo);
             this.answerDeleteToDo = !this.answerDeleteToDo;
+            console.log(this.answerDeleteToDo);
+        },
+        delteToDo() {
+            const id = this.doto.id;
+            const index = toDos.toDosLists.findIndex((todo) => todo.id === id);
+            if (index >= 0) {
+                toDos.toDosLists.splice(index, 1);
+            }
+            this.answerDeleteToDo = false;
+            setTimeout(() => {
+                this.answerDeleteToDo = false;
+            }, 50);
+        },
+        showDeleteButton() {
+            if (this.doto.done) {
+                return true;
+            }
+            return false;
         }
     },
     template: `
@@ -42,10 +61,14 @@ Vue.component('note', {
         <div class="itsDo doCheckbox" v-show="yesDo()" v-on:click="inverseDo"><img class="imgSvg Correct" src="correct.svg"></div>
         <p v-show="noDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo }"> {{ doto.do }}</p>
         <p v-show="yesDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo }"> {{ doto.do }}</p>
-        <button v-model:value="deleteButton" class="deleteButton" v-on:click="AnswerDeleteNote"><img src="trash.svg" class="trashSvg"/></input>
+        <button v-show="showDeleteButton()" class="deleteButton" v-on:click="AnswerDeleteNote"><img src="trash.svg" class="trashSvg"/></button>
         <div v-show="answerDeleteToDo" class="boxToCenter">
             <div class="intoBox">
-                <button v-on:click="AnswerDeleteNote">STOP</button>
+                <div class="answerCompenent">
+                    <h3>Voulez vous vraiment supprimer la note <span class="AnswerDeleteH3"> {{ doto.do }} </span> ? </h3>  
+                    <button class="AnswerDeleteButtonNo" v-on:click="this.anserDeleteToDo = false">No</button>
+                    <button class="AnswerDeleteButtonYes" v-on:click="delteToDo">Yes</button>
+                </div>
             </div>
         </div>
     </div>

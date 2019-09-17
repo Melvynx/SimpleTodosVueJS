@@ -1,25 +1,31 @@
+let labelToCreateToDo = 'Ecrire une nouveau toDos';
 Vue.component('newtodo', {
   props: ['doto'],
   data() {  
     return {
-      label: 'Ecrire une nouveau toDos.',
+      label: labelToCreateToDo,
       doName: '',
     };
   },
   methods: {
     sendToDos() {
       if (toDos.toDosLists) {
-        toDoSend = new newToDos(this.doName);
-        toDos.toDosLists.push(toDoSend);
-        this.doName = '';
-        console.log("send");
+        if (catchDo(this.doName)) {
+          toDoSend = new newToDos(this.doName);
+          toDos.toDosLists.push(toDoSend);
+          this.doName = '';
+        } else {
+          this.label = "La limite de caractères est entre 4 et 40."
+          setTimeout(() => {
+            this.label = labelToCreateToDo; 
+          }, 3000);
+        }
       };
-      console.log("ok");
     },
   },
   template: `
     <div class="toDosNew">
-      <label> {{ label }} <input type="text" v-model="doName" class="toDosNewInput" v-on:keyup.enter="sendToDos" placeholder="Nouvelle tâche"></label>
+      <p class="labelNewToDo"> {{ label }} </p> <input type="text" v-model="doName" class="toDosNewInput" v-on:keyup.enter="sendToDos" placeholder="Nouvelle tâche">
     </div>
   `,
 });

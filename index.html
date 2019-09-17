@@ -8,9 +8,11 @@
   <body>
     <div id="ToDos" class="toDosBlock">
       <newtodo></newtodo>
-      <note v-for="doTo in toDosLists" v-bind:doto="doTo" />
+      <transition-group mode="out-in" name="fade" tag="div" class="listOfNote"></transition-group>
+        <doto v-bind:key="doTo.id" v-for="doTo in toDosLists" v-bind:doto="doTo"></doto>
+      </transition-group>
+      <button v-on:click="deleteAllDo" class="deleteAllButton">Supprimer toutes les notes faites</button>
     </div>
-
 
 
     <script src="node_modules/vue/dist/vue.js"></script>
