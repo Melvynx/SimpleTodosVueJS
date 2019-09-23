@@ -1,77 +1,136 @@
 Vue.component('doto', {
-    props: ['doto'],
-    data() {
-      return {
-        checkToDo: false,
-        isDo: false,
-        deleteButton: "",
-        answerDeleteToDo: false,
-      };
+  props: ['doto'],
+  data() {
+   return {
+    checkToDo: false,
+    isDo: false,
+    deleteButton: "",
+    answerDeleteToDo: false,
+    showSettingsDeleteVerif: true,
+    showSettingsDelete: false,
+    z : 0,
+    isChanging: false,
+    isChange2: false,
+    changeDo: false,
+    showSettingsButton: false,
+    annulerNormalToModify: true,
+    showEditButtonToChange: true,
+   };
+  },
+  methods: {
+    clickSalut() {
+      alert("saluit");
     },
-    methods: {
-        clickSalut() {
-            alert("saluit");
-        },
-        yesDo() {
-            if (this.doto.done){
-                this.isDo = true;
-                return true;
-            }else {
-                return false;
-            }
-        },
-        noDo() {
-            if (this.doto.done) {
-                return false;
-            } else {
-                this.isDo = false;
-                return true;
-            }
-        },
-        inverseDo() {
-            this.doto.done = !this.doto.done;
-            console.log("ok");
-        },
-        AnswerDeleteNote() {
-            console.log(this.answerDeleteToDo);
-            this.answerDeleteToDo = !this.answerDeleteToDo;
-            console.log(this.answerDeleteToDo);
-        },
-        delteToDo() {
-            const id = this.doto.id;
-            const index = toDos.toDosLists.findIndex((todo) => todo.id === id);
-            if (index >= 0) {
-                toDos.toDosLists.splice(index, 1);
-            }
-            this.answerDeleteToDo = false;
-            setTimeout(() => {
-                this.answerDeleteToDo = false;
-            }, 50);
-        },
-        showDeleteButton() {
-            if (this.doto.done) {
-                return true;
-            }
-            return false;
-        }
+    yesDo() {
+      if (this.doto.done){
+        this.isDo = true;
+        return true;
+      }else {
+        return false;
+      }
     },
-    template: `
-    <div class="doList">
-        <div class="notDo doCheckbox" v-show="noDo()" v-on:click="inverseDo"><img class="imgSvg inCorrect" src="incorrect.svg"/></div>
-        <div class="itsDo doCheckbox" v-show="yesDo()" v-on:click="inverseDo"><img class="imgSvg Correct" src="correct.svg"></div>
-        <p v-show="noDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo }"> {{ doto.do }}</p>
-        <p v-show="yesDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo }"> {{ doto.do }}</p>
-        <button v-show="showDeleteButton()" class="deleteButton" v-on:click="AnswerDeleteNote"><img src="trash.svg" class="trashSvg"/></button>
-        <div v-show="answerDeleteToDo" class="boxToCenter">
-            <div class="intoBox">
-                <div class="answerCompenent">
-                    <h3>Voulez vous vraiment supprimer la note <span class="AnswerDeleteH3"> {{ doto.do }} </span> ? </h3>  
-                    <button class="AnswerDeleteButtonNo" v-on:click="this.anserDeleteToDo = false">No</button>
-                    <button class="AnswerDeleteButtonYes" v-on:click="delteToDo">Yes</button>
-                </div>
+    noDo() {
+      if (this.doto.done) {
+        return false;
+      } else {
+        this.isDo = false;
+        return true;
+      }
+    },
+    inverseDo() {
+      this.doto.done = !this.doto.done;
+    },
+    openSettingsPage() {
+      this.answerDeleteToDo = true;
+    },
+    delteToDo() {
+      const id = this.doto.id;
+      const index = toDos.toDosLists.findIndex((todo) => todo.id === id);
+      if (index >= 0) {
+        toDos.toDosLists.splice(index, 1);
+      }
+      this.answerDeleteToDo = false;
+      setTimeout(() => {
+        this.answerDeleteToDo = false;
+      }, 50);
+    },
+    closeSettingsPage() {
+      this.answerDeleteToDo = false;
+      this.msgModify = "Modifier";
+    },
+    changeToDo() {
+      this.isChanging = !this.isChanging;
+      this.changeDo = !this.changeDo;
+      saveDoBeforeChange = this.doto.do;
+      this.msgModify = "Terminer";
+      this.annulerNormalToModify = false;
+      this.$nextTick(() => this.$refs.refEditDo.focus());
+      this.showEditButtonToChange = !this.showEditButtonToChange;
+    },
+    returnExDo() {
+      this.doto.do = saveDoBeforeChange;
+      this.annulerNormalToModify = true;
+      this.msgModify = "Modifier";
+      this.isChanging = !this.isChanging;
+      this.showEditButtonToChange = !this.showEditButtonToChange;
+      this.changeDo = !this.changeDo;
+    },
+    tryDeleteToDo(){
+      this.showSettingsDelete = true;
+      this.showSettingsDeleteVerif = false;
+    },
+    saveDo() {
+      this.isChanging = false;
+      this.changeDo = false;
+      this.msgModify = "Modifier";
+      this.showEditButtonToChange = !this.showEditButtonToChange;
+      this.annulerNormalToModify = !this.annulerNormalToModify;
+    },
+    mouseOverDoList() {
+      this.showSettingsButton = true;
+    },
+    mouseLeaveDoList() {
+      this.showSettingsButton = false;
+
+    }
+  },
+  template: `
+  <div class="doList" @mouseover="mouseOverDoList" @mouseleave="mouseLeaveDoList">
+    <div class="notDo doCheckbox" v-show="noDo()" v-on:click="inverseDo"><img class="imgSvg inCorrect" src="incorrect.svg"/></div>
+    <div class="itsDo doCheckbox" v-show="yesDo()" v-on:click="inverseDo"><img class="imgSvg Correct" src="correct.svg"></div>
+    <p class="doListP" v-show="noDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo }"> {{ doto.do }}</p>
+    <p class="doListP" v-show="yesDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo }"> {{ doto.do }}</p>
+    <transition name="smouth">
+      <button v-show="showSettingsButton" class="settingsButton" v-on:click="openSettingsPage"><img src="settings.svg" class="settingsSvg"/></button>
+    </transition>
+    <transition name="fade">
+      <div v-show="answerDeleteToDo" class="boxToCenter">
+        <div class="intoBox">
+          <a href="#">
+          <div class="answerCompenent">
+          
+            <div class="settingsDo">
+              <div class="notDo doCheckbox" v-show="noDo()" v-on:click="inverseDo"><img class="imgSvg inCorrect" src="incorrect.svg"/></div>
+              <div class="itsDo doCheckbox" v-show="yesDo()" v-on:click="inverseDo"><img class="imgSvg Correct" src="correct.svg"></div>
+              <p v-show="yesDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo, changeDo: isChanging }"> {{ doto.do }}</p>
+              <p v-show="noDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo, changeDo: isChanging }"> {{ doto.do }}</p>
+              <p><input class="inputEditDo" type="text" v-show="changeDo" v-model="doto.do" v-on:keyup.enter="saveDo" ref="refEditDo"></p>
+
+              
             </div>
+
+            <div class="settingsBox" v-show="showEditButtonToChange" v-on:click="changeToDo"><p class="settingsBoxP">Modifier</p></div> 
+            <div class="settingsBox" v-show="!showEditButtonToChange" v-on:click="saveDo"><p class="settingsBoxP">Terminer</p></div> 
+            <div class="settingsBox" v-show="showSettingsDeleteVerif" v-on:click="tryDeleteToDo"><p class="settingsBoxP">Supprimer</p></div> 
+            <div class="tryDeleteBox settingsBox" v-show="showSettingsDelete" v-on:click="delteToDo"><p class="tryDeleteBox settingsBoxP">Supprimer imédiatement ?</p></div> 
+            <div v-show="annulerNormalToModify" class="cancelSettingsBox settingsBox" v-on:click="closeSettingsPage"><p class="settingsBoxP">Annuler</p></div> 
+            <div v-show="!annulerNormalToModify" class="cancelSettingsBox settingsBox" v-on:click="returnExDo"><p class="settingsBoxP">Annuler le changement</p></div> 
+          </div>
+          </a>
         </div>
-    </div>
-    `,
-  });
-  
+      </div>
+    </transition>
+  </div>
+  `,
+ });
+ 

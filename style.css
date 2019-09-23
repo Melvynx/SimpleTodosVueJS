@@ -52,6 +52,9 @@ input:placeholder-shown{
   display: flex;
   position: relative;
 }
+.doListP {
+  width: 300px;
+}
 .doCheckbox{
   width: 30px;
   height: 30px;
@@ -92,8 +95,11 @@ input:placeholder-shown{
   text-decoration: line-through;
   color: #a3a3a3;
 }
-.trashSvg{
-  width: 24px;
+.settingsSvg{
+  width: 18px;
+  position: relative;
+  right: 6px;
+  top: 2px;
 }
 .boxToCenter{
   display: grid;
@@ -102,7 +108,7 @@ input:placeholder-shown{
   left: 0;
   width: 100%;
   height: 100%; 
-  background-color: #0e0f192d;
+  background-color: #0e0f19ab;
   z-index: 5;
 }
 .intoBox{
@@ -112,14 +118,12 @@ input:placeholder-shown{
 }
 .answerCompenent{
   position: relative;
-  width: 300px;
+  width: 500px;
   height: 100px;
-  border: 2px solid #808088b9;
-  background-color: #0e0f1985;
   color: white;
   
 }
-.answerCompenent button, .deleteButton  {
+.answerCompenent button, .settingsButton  {
   border: 1px solid #a3a3a3;
   background-color: #0e0f19;
   width: 50px;
@@ -127,12 +131,66 @@ input:placeholder-shown{
   color: #f4ecd6;
   border-radius: 5px;
 }
-.deleteButton{
+a{
+  text-decoration: none; 
+}
+.changeDo, .changeDo2{
+  display: none;
+}
+.settingsDo {
+  margin: auto;
+  width: 360px;
+  
+  font-family: Arial;
+  border: 2px solid #0e0f19;  
+  background-color: #466060;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 2px;
+  display: flex;
+  position: relative;
+}
+.inputEditDo {
+  background-color: #466060;
+  padding: 5px;
+  border: none;
+  width: 360px;
+  height: 20px;
+  color: #f4ecd6;
+  font-size: 16px;
+  margin-left: 5px;
+  margin-top: 4px;
+}
+.tryDeleteBox{
+  background-color: #580606 !important;
+  color: rgb(206, 201, 201) !important; 
+}
+.cancelSettingsBox{
+  background-color: #9b9696 !important;
+  border: 1px solid rgb(70, 70, 70);
+}
+.settingsBox{
+  margin: auto;
+  width: 370px;
+  height: 55px;
+  background-color: #fafafad2;
+  border: 1px solid rgba(31, 30, 30, 0.815);
+  border-radius: 10px;
+  margin-top: 15px;
+}
+.settingsBoxP{
+  color: black;
+  text-align: center;
+  font-size: 18px;
+}
+.settingsButton{
   background-color: #c5c1b5;
   position: absolute;
   bottom: 18px;
   right: 20px;
-  width: 40px;
+  width: 24px;
+  height: 24px;
+
 }
 .AnswerDeleteH3{
   color: #f4ecd6;
@@ -163,5 +221,11 @@ input:placeholder-shown{
   transition: opacity .4s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.smouth-enter-active, .deleteButtonTransition-leave-active {
+  transition: opacity .2s;
+}
+.smouth-enter, .deleteButtonTransition-leave-to {
   opacity: 0;
 }

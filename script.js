@@ -19,11 +19,12 @@ class newToDos {
     this.done = false;
   }
 }
+let saveDoBeforeChange = "";
 const toDos = new Vue({
   el: "#ToDos",
   data: {
     label: "",
-    toDosLists: [{id: 0, do: "Faire les course", done: false}, {id: 1, do: "MANGER POIRE", done: false}, {id: 2, do: "chercher grand mère", done: false}],
+    toDosLists: [{id: 0, do: "Changer le button modifer en sauvegarder", done: false}, {id: 1, do: "faire en sort que le button anuller agise comme retours en arrière", done: true}, {id: 2, do: "changer style input", done: true}, {id: 3, do: "Manger jean pierre", done: false}, {id: 4, do: "Aller voir papy", done: false}],
     doName: "",
   },
   methods: {
