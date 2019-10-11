@@ -55,7 +55,7 @@ const toDos = new Vue({
       }
       console.log(w);
     },
-  }
+  },
 })
 /*for (i = 0; i < toDos.toDosLists.length; i++) {
           toDos.toDosLists[i].done = true;

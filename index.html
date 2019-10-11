@@ -9,7 +9,7 @@
     <div id="ToDos" class="toDosBlock">
       <newtodo></newtodo>
       <transition-group mode="out-in" name="fade" tag="div" class="listOfNote"></transition-group>
-        <doto v-bind:key="doTo.id" v-for="doTo in toDosLists" v-bind:doto="doTo"></doto>
+        <doto v-bind:key="doto.id" v-for="doto in toDosLists" v-bind:doto="doto"></doto>
       </transition-group>
       <button v-on:click="deleteAllDo" class="deleteAllButton">Supprimer toutes les notes faites</button>
     </div>

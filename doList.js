@@ -15,6 +15,8 @@ Vue.component('doto', {
     showSettingsButton: false,
     annulerNormalToModify: true,
     showEditButtonToChange: true,
+    informationPage: false,
+    showInformation: false,
    };
   },
   methods: {
@@ -57,34 +59,49 @@ Vue.component('doto', {
     closeSettingsPage() {
       this.answerDeleteToDo = false;
       this.msgModify = "Modifier";
+      this.showSettingsDelete = false;
+      this.showSettingsDeleteVerif = true;
     },
     changeToDo() {
-      this.isChanging = !this.isChanging;
-      this.changeDo = !this.changeDo;
+      console.log("changement de do")
+      this.isChanging = true;
+      this.changeDo = true;
       saveDoBeforeChange = this.doto.do;
       this.msgModify = "Terminer";
       this.annulerNormalToModify = false;
       this.$nextTick(() => this.$refs.refEditDo.focus());
-      this.showEditButtonToChange = !this.showEditButtonToChange;
+      this.showEditButtonToChange = false;
     },
     returnExDo() {
+      console.log("Annuler le changement")
       this.doto.do = saveDoBeforeChange;
-      this.annulerNormalToModify = true;
-      this.msgModify = "Modifier";
-      this.isChanging = !this.isChanging;
-      this.showEditButtonToChange = !this.showEditButtonToChange;
-      this.changeDo = !this.changeDo;
+      this.$nextTick(() => this.$refs.refEditDo.focus());
+      this.saveDo();
     },
     tryDeleteToDo(){
       this.showSettingsDelete = true;
       this.showSettingsDeleteVerif = false;
     },
     saveDo() {
+      console.log("Sauvegarde");
       this.isChanging = false;
       this.changeDo = false;
       this.msgModify = "Modifier";
-      this.showEditButtonToChange = !this.showEditButtonToChange;
-      this.annulerNormalToModify = !this.annulerNormalToModify;
+      if (catchDo(this.doto.do)) {
+      console.log("Sauvegarde réussite");
+        this.annulerNormalToModify = true;
+        this.showEditButtonToChange = true;
+    } else {
+        this.showInformation = true;
+        this.showSettingsDelete = false;
+        this.showSettingsDeleteVerif = false;
+        setTimeout(() => {
+          console.log("Sauvegarde -> échec, delete page");
+        this.showInformation = false;
+        this.showSettingsDeleteVerif = true;
+        }, 3000);
+        this.returnExDo();
+      }
     },
     mouseOverDoList() {
       this.showSettingsButton = true;
@@ -92,7 +109,10 @@ Vue.component('doto', {
     mouseLeaveDoList() {
       this.showSettingsButton = false;
 
-    }
+    },
+    limitation() {
+      this.doto.do
+    }  
   },
   template: `
   <div class="doList" @mouseover="mouseOverDoList" @mouseleave="mouseLeaveDoList">
@@ -112,9 +132,9 @@ Vue.component('doto', {
             <div class="settingsDo">
               <div class="notDo doCheckbox" v-show="noDo()" v-on:click="inverseDo"><img class="imgSvg inCorrect" src="incorrect.svg"/></div>
               <div class="itsDo doCheckbox" v-show="yesDo()" v-on:click="inverseDo"><img class="imgSvg Correct" src="correct.svg"></div>
-              <p v-show="yesDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo, changeDo: isChanging }"> {{ doto.do }}</p>
-              <p v-show="noDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo, changeDo: isChanging }"> {{ doto.do }}</p>
-              <p><input class="inputEditDo" type="text" v-show="changeDo" v-model="doto.do" v-on:keyup.enter="saveDo" ref="refEditDo"></p>
+              <p class="doListP" v-show="yesDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo, changeDo: isChanging }"> {{ doto.do }}</p>
+              <p class="doListP" v-show="noDo()" v-on:click="inverseDo" v-bind:class="{ biffed: isDo, changeDo: isChanging }"> {{ doto.do }}</p>
+              <input class="inputEditDo" type="text" v-show="changeDo" v-model="doto.do" v-on:keyup="limitation" v-on:keyup.enter="saveDo" ref="refEditDo">
 
               
             </div>
@@ -123,8 +143,9 @@ Vue.component('doto', {
             <div class="settingsBox" v-show="!showEditButtonToChange" v-on:click="saveDo"><p class="settingsBoxP">Terminer</p></div> 
             <div class="settingsBox" v-show="showSettingsDeleteVerif" v-on:click="tryDeleteToDo"><p class="settingsBoxP">Supprimer</p></div> 
             <div class="tryDeleteBox settingsBox" v-show="showSettingsDelete" v-on:click="delteToDo"><p class="tryDeleteBox settingsBoxP">Supprimer imédiatement ?</p></div> 
-            <div v-show="annulerNormalToModify" class="cancelSettingsBox settingsBox" v-on:click="closeSettingsPage"><p class="settingsBoxP">Annuler</p></div> 
-            <div v-show="!annulerNormalToModify" class="cancelSettingsBox settingsBox" v-on:click="returnExDo"><p class="settingsBoxP">Annuler le changement</p></div> 
+            <div class="tryDeleteBox settingsBox" v-show="showInformation"><p class="tryDeleteBox settingsBoxP">Caractères minimume : 4, maximume : 30</p></div> 
+            <div v-show="annulerNormalToModify" class="cancelSettingsBox settingsBox" v-on:click="closeSettingsPage"><p class="settingsBoxP">Quitter</p></div> 
+            <div v-show="!annulerNormalToModify" class="cancelSettingsBox settingsBox" v-on:click="returnExDo"><p class="settingsBoxP">Annuler les changements</p></div> 
           </div>
           </a>
         </div>

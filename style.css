@@ -48,9 +48,10 @@ input:placeholder-shown{
   background-color: #466060;
   border-radius: 10px;
   padding: 5px;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
   display: flex;
   position: relative;
+  
 }
 .doListP {
   width: 300px;
@@ -58,25 +59,23 @@ input:placeholder-shown{
 .doCheckbox{
   width: 30px;
   height: 30px;
-  background-color: #0e0f19;
-  border: 2px solid #310a31;
   margin-right: 10px;
-  margin-top: 6px;
+  margin-top: 10px;
   border-radius: 5px;
   transition-property: background-color, border;
   transition-duration: 1s;
 }
 .notDo{
-  background-color: #f4ecd6;
 }
 .notDo:hover{
   background-color: #d3b0d3;
   border-color: rgb(70, 69, 69);
 }
 .itsDo{
-  background-color: #6bb300;
 }
 .itsDo:hover{
+  background-color: #d3b0d3;
+  border-color: rgb(70, 69, 69);
   
 }
 .Correct{
@@ -115,6 +114,7 @@ input:placeholder-shown{
   margin: auto;
   top: 50%;
   right: 50%;
+  height: 350px;
 }
 .answerCompenent{
   position: relative;
@@ -151,15 +151,17 @@ a{
   position: relative;
 }
 .inputEditDo {
+  border: none;
+  border-bottom: 1px solid white;
   background-color: #466060;
   padding: 5px;
-  border: none;
   width: 360px;
   height: 20px;
   color: #f4ecd6;
   font-size: 16px;
-  margin-left: 5px;
-  margin-top: 4px;
+  margin-left: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .tryDeleteBox{
   background-color: #580606 !important;
