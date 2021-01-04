@@ -1,6 +1,6 @@
-# toDos
-Todos app.
+# Simple Todos APP in VueJS
 
-Made with Vue.js 
+I'm not proud of it.
+But it's a memory of my first projects.
 
-I'm not proud of it x)
+Made with ❤️.
